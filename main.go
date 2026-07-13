@@ -4,6 +4,7 @@ import (
 	"html/template"
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/gorilla/mux"
 
@@ -26,14 +27,18 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 
+	// Connect to PostgreSQL
 	database.ConnectDB()
 
+	// Create router
 	router := mux.NewRouter()
 
+	// Routes
 	router.HandleFunc("/", homeHandler).Methods("GET")
 	router.HandleFunc("/shorten", handlers.ShortenURL).Methods("POST")
 	router.HandleFunc("/{code}", handlers.RedirectURL).Methods("GET")
 
+	// Serve static files
 	router.PathPrefix("/static/").Handler(
 		http.StripPrefix(
 			"/static/",
@@ -41,7 +46,15 @@ func main() {
 		),
 	)
 
-	log.Println("🚀 Server running at http://localhost:8081")
+	// Get PORT from Render
+	port := os.Getenv("PORT")
 
-	log.Fatal(http.ListenAndServe(":8081", router))
+	// For local development
+	if port == "" {
+		port = "8081"
+	}
+
+	log.Println("🚀 Server running on port " + port)
+
+	log.Fatal(http.ListenAndServe(":"+port, router))
 }
