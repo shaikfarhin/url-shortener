@@ -1,18 +1,18 @@
 # 🔗 URL Shortener
 
-A simple and efficient URL Shortener built using **Go**, **PostgreSQL**, **HTML**, and **CSS**. The application allows users to shorten long URLs, store them in a PostgreSQL database, redirect using the generated short URL, and track the number of clicks.
+A simple and efficient URL Shortener built using **Go**, **PostgreSQL**, **HTML**, and **CSS**. The application allows users to shorten long URLs, store them in a PostgreSQL database, redirect users to the original URL, and track click counts.
 
 ---
 
 ## 🚀 Features
 
-- ✅ Shorten long URLs
-- ✅ Generate unique short codes
-- ✅ Redirect to the original URL
-- ✅ Store URLs in PostgreSQL
-- ✅ Track click count
-- ✅ Responsive HTML & CSS interface
-- ✅ Environment variables using `.env`
+- Shorten long URLs
+- Generate unique short codes
+- Redirect to the original URL
+- Store URLs in PostgreSQL
+- Track click count
+- Responsive HTML & CSS interface
+- Environment variables using `.env`
 
 ---
 
@@ -24,7 +24,6 @@ A simple and efficient URL Shortener built using **Go**, **PostgreSQL**, **HTML*
 - HTML5
 - CSS3
 - Git
-- Docker (Ready)
 
 ---
 
@@ -35,19 +34,14 @@ url-shortener/
 │
 ├── database/
 │   └── db.go
-│
 ├── handlers/
 │   └── handlers.go
-│
 ├── static/
 │   └── style.css
-│
 ├── templates/
 │   └── index.html
-│
 ├── utils/
 │   └── generator.go
-│
 ├── .env.example
 ├── .gitignore
 ├── go.mod
@@ -63,7 +57,7 @@ url-shortener/
 ### Clone the repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/url-shortener.git
+git clone https://github.com/shaikfarhin/url-shortener.git
 ```
 
 ### Go to the project
@@ -78,7 +72,7 @@ cd url-shortener
 go mod tidy
 ```
 
-### Configure environment variables
+### Configure Environment Variables
 
 Create a `.env` file:
 
@@ -96,7 +90,7 @@ DB_NAME=url_shortener
 go run main.go
 ```
 
-Open:
+Open your browser and visit:
 
 ```
 http://localhost:8081
@@ -121,20 +115,20 @@ CREATE TABLE urls (
 ## 📸 Screenshots
 
 - Home Page
-- Short URL Generated
+- Shortened URL Result
 - PostgreSQL Database
 
-(Add screenshots later.)
+(Add screenshots after deployment.)
 
 ---
 
 ## 📈 Future Improvements
 
-- Copy to Clipboard button
-- URL validation
+- Copy URL button
 - QR Code generation
-- User authentication
 - Custom short URLs
+- User authentication
+- URL validation
 
 ---
 
@@ -142,4 +136,4 @@ CREATE TABLE urls (
 
 **Shaik Farhin**
 
-GitHub: https://github.com/YOUR_USERNAME
+GitHub: https://github.com/shaikfarhin
