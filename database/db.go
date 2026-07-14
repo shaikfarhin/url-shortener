@@ -14,10 +14,9 @@ var DB *sql.DB
 
 func ConnectDB() {
 
-	// Load .env file only for local development.
-	// On Render, environment variables are provided automatically.
+	// Load .env only for local development
 	if err := godotenv.Load(); err != nil {
-		log.Println("No .env file found, using Render environment variables")
+		log.Println("No .env file found, using environment variables")
 	}
 
 	host := os.Getenv("DB_HOST")
@@ -26,20 +25,29 @@ func ConnectDB() {
 	password := os.Getenv("DB_PASSWORD")
 	dbname := os.Getenv("DB_NAME")
 
+	// Render PostgreSQL requires SSL
 	psqlInfo := fmt.Sprintf(
-		"host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
-		host, port, user, password, dbname,
+		"host=%s port=%s user=%s password=%s dbname=%s sslmode=require",
+		host,
+		port,
+		user,
+		password,
+		dbname,
 	)
 
-	DB, err := sql.Open("postgres", psqlInfo)
+	var err error
+
+	// Initialize the global DB variable
+	DB, err = sql.Open("postgres", psqlInfo)
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal("Failed to open database:", err)
 	}
 
+	// Test the connection
 	err = DB.Ping()
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal("Failed to connect to database:", err)
 	}
 
-	fmt.Println("✅ Connected to PostgreSQL")
+	log.Println("✅ Connected to PostgreSQL")
 }

@@ -35,7 +35,12 @@ func ShortenURL(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	shortURL := fmt.Sprintf("http://localhost:8081/%s", shortCode)
+	// Build URL dynamically (works locally and on Render)
+	shortURL := fmt.Sprintf("%s://%s/%s",
+		getScheme(r),
+		r.Host,
+		shortCode,
+	)
 
 	fmt.Fprintf(w,
 		"<h2>✅ URL Shortened Successfully!</h2><br><p>Short URL: <a href='%s'>%s</a></p>",
@@ -72,4 +77,16 @@ func RedirectURL(w http.ResponseWriter, r *http.Request) {
 	}
 
 	http.Redirect(w, r, originalURL, http.StatusFound)
+}
+
+func getScheme(r *http.Request) string {
+	if r.TLS != nil {
+		return "https"
+	}
+
+	if r.Header.Get("X-Forwarded-Proto") == "https" {
+		return "https"
+	}
+
+	return "http"
 }
