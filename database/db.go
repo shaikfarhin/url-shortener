@@ -13,9 +13,11 @@ import (
 var DB *sql.DB
 
 func ConnectDB() {
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file")
+
+	// Load .env file only for local development.
+	// On Render, environment variables are provided automatically.
+	if err := godotenv.Load(); err != nil {
+		log.Println("No .env file found, using Render environment variables")
 	}
 
 	host := os.Getenv("DB_HOST")
@@ -29,7 +31,7 @@ func ConnectDB() {
 		host, port, user, password, dbname,
 	)
 
-	DB, err = sql.Open("postgres", psqlInfo)
+	DB, err := sql.Open("postgres", psqlInfo)
 	if err != nil {
 		log.Fatal(err)
 	}
